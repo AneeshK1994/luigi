@@ -1,0 +1,62 @@
+create a new directory for your Luigi project
+
+	mkdir luigi-demo
+	
+	cd luigi-demo
+	
+Create a new virtual environment in your project directory
+
+	python3 -m venv luigi-venv
+	
+Activate the virtual environment
+	
+	source luigi-venv/bin/activate
+	
+With the virtual environment active, install Luigi using pip
+
+	pip install luigi
+	
+Create a new Python file in your project directory. For eg: example_task.py
+
+	touch example_task.py	
+
+
+Open example_task.py in a text editor and add your Luigi task definition. Here's a simple example
+
+	import luigi
+
+	class HelloWorldTask(luigi.Task):
+	    def run(self):
+	        print("Hello, World!")
+
+	if __name__ == '__main__':
+	    luigi.run()
+
+To run your Luigi task locally, use the following command:
+
+	python -m luigi --module example_task HelloWorldTask --local-scheduler
+
+
+	module example_task: This specifies the module where your task is defined.
+
+	HelloWorldTask: This is the name of the task you want to run.
+
+	local-scheduler: This uses Luigi's built-in scheduler rather than a central scheduler.
+
+If you want to use a central scheduler,Start the Luigi Daemon
+
+	luigid --port 8082 > /dev/null 2> /dev/null &
+
+Execute your task with the central scheduler
+
+	python -m luigi --module example_task HelloWorldTask
+
+now you can see the active task and there details in the web interface.for that call the below url
+
+	http://<server-ip>:8082
+ 
+
+
+
+
+
